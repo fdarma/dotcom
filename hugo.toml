@@ -1,4 +1,4 @@
-baseURL = 'https://example.org/'
+baseURL = 'https://fdarma.com/'
 languageCode = 'en-us'
-title = 'fdarma'
+title = 'saravah'
 theme = "hugo-bearcub"
