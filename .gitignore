@@ -136,3 +136,13 @@ dist
 .pnp.*
 
 /public
+
+/themes
+
+/resources
+
+/.obsidian
+
+/content/blog/.obsidian
+
+.DS_Store
