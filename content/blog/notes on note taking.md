@@ -15,7 +15,7 @@ tags = ["devlog"]
 **what I use**
 - .md: 
 	- because I can take it anywhere
-	- because bolding text, code blocks, and bullet points is really all I need
+	- because I want to render code blocks and images
 - sheets.google.com: 
 	- because 100 columns on markdown is jank as
 	- because tables are easy to reason about
