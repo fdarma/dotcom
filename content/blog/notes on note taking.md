@@ -28,5 +28,4 @@ tags = ["devlog"]
 - centralised: why two tool when one tool do trick
 - accessible: to view it on the go
 - portable: so that I have an escape plan
-
-I think I'm ready to build something now
+- resourceful: if it costs nothing to run then I never need to close it
