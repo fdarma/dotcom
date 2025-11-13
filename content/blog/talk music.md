@@ -1,7 +1,7 @@
 +++
-date = '2025-06-18T17:02:10+10:00'
+date = '2025-06-18'
 title = 'talk music'
-description = "Or what I talk aobut when I talk about music"
+description = "Or what I talk about when I talk about music"
 tags = ["talktalk"]
 +++
 
