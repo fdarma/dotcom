@@ -1,7 +1,7 @@
 +++
 date = '2025-11-12'
 title = 'notes on note taking'
-description = "a growing list of things I want from a note taker"
+description = "a growing spec of things I want from a note taking tool and why it matters"
 tags = ["devlog"]
 +++
 
