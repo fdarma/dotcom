@@ -1,5 +1,5 @@
 +++
-date = '2025-11-13'
+date = '2025-11-12'
 title = 'how I take notes'
 description = "a growing list of things I want from a note taker"
 tags = ["devlog"]
@@ -8,14 +8,14 @@ tags = ["devlog"]
 > [If a person forgets an idea that they love, it's a horror...](https://www.youtube.com/watch?v=dZFlobeagHA)
 
 **my notes are**
-- chaotic: I have a single .md file for day to day notes
+- chaotic: I have [a single](https://karpathy.bearblog.dev/the-append-and-review-note/) [.md file for day to day notes](https://jeffhuang.com/productivity_text_file/)
 - scrappy: things written down are unfinished and ephemeral like temp storage
-- simple: no care for backticks, tags, views, formulas, comments, ai, etc.
+- simple: no care for backticks, colour, tags, views, formulas, comments, ai, etc.
 
 **what I use**
 - .md: 
 	- because I can take it anywhere
-	- because bolding text and bullet points is really all I need
+	- because bolding text, code blocks, and bullet points is really all I need
 - sheets.google.com: 
 	- because 100 columns on markdown is jank as
 	- because tables are easy to reason about
