@@ -29,3 +29,4 @@ tags = ["devlog"]
 - accessible: to view it on the go
 - portable: so that I have an escape plan
 - resourceful: if it costs nothing to run then I never need to close it
+- local: I'm offline sometimes
