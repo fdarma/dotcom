@@ -1,0 +1,27 @@
+{
+  "name": "dotcom",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "ASTRO_TELEMETRY_DISABLED=1 astro dev",
+    "normalize:content": "node scripts/normalize-content.mjs",
+    "generate:redirects": "node scripts/generate-redirects.mjs",
+    "build": "pnpm run normalize:content && pnpm run generate:redirects && ASTRO_TELEMETRY_DISABLED=1 astro build",
+    "preview": "ASTRO_TELEMETRY_DISABLED=1 astro preview",
+    "check": "ASTRO_TELEMETRY_DISABLED=1 astro check",
+    "astro": "ASTRO_TELEMETRY_DISABLED=1 astro",
+    "deploy": "pnpm run build && npx wrangler deploy"
+  },
+  "dependencies": {
+    "@iarna/toml": "^2.2.5",
+    "astro": "^5.1.0",
+    "gray-matter": "^4.0.3",
+    "markdown-it": "^14.1.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.6",
+    "@types/markdown-it": "^14.1.2",
+    "@types/node": "^22.10.2",
+    "typescript": "^5.7.2"
+  }
+}

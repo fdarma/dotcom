@@ -1,3 +1,9 @@
++++
+date = '2026-01-21'
+title = 'notes on my first car'
+description = ""
+tags = []
++++
 Priorities
 1. Must be able to get me anywhere
 	1. Must be able to be repaired anywhere

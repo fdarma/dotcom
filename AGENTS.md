@@ -1,40 +1,45 @@
 # AGENTS.md
 
 ## Project overview
-- This repository is a Hugo-powered personal site.
-- The active theme is `hugo-bearcub` via Git submodule at `themes/hugo-bearcub`.
-- Deploy target is Cloudflare (assets are served from `public/`) configured in `wrangler.jsonc`.
+- This repository is an Astro-powered personal site deployed to Cloudflare.
+- Bear Cub remains the visual source of truth through the git submodule at `themes/hugo-bearcub`.
+- Content is authored in Markdown under `content/` and rendered by Astro routes/components.
 
 ## Repository layout
-- `content/`: site content (posts/pages).
-- `content/blog/`: blog entries, mostly Markdown with TOML front matter.
-- `layouts/`: site-level Hugo layout overrides.
-- `assets/`: site-level assets processed by Hugo.
-- `static/`: static files copied as-is by Hugo.
-- `themes/hugo-bearcub/`: upstream theme submodule.
-- `public/`: generated output (build artifact).
-- `hugo.toml`: main Hugo configuration.
-- `wrangler.jsonc`: Cloudflare deployment configuration.
+- `content/`: source content (home page + blog posts).
+- `src/`: Astro app code (pages, layouts, components, libs).
+- `src/config/site.ts`: site-level metadata and formatting helpers.
+- `src/lib/content.ts`: content loading/parsing + nav/tag/post indexes.
+- `scripts/normalize-content.mjs`: auto-fixes malformed/missing blog front matter.
+- `scripts/generate-redirects.mjs`: generates `public/_redirects` from legacy URLs.
+- `public/`: static assets copied into build output (`dist/`).
+- `themes/hugo-bearcub/`: Bear Cub submodule assets used by Astro imports.
+- `wrangler.jsonc`: Cloudflare deployment config.
 
 ## Working rules for agents
-- Keep edits minimal and scoped to the user request.
-- Do not hand-edit `public/`; regenerate it with Hugo when needed.
-- Avoid changing `themes/hugo-bearcub/` unless explicitly requested (submodule-managed).
-- Preserve existing front matter style: TOML (`+++`) and date format `YYYY-MM-DD`.
-- For new blog posts, prefer placing files under `content/blog/`.
-- Ignore local/editor metadata changes unless requested (for example `.DS_Store`, `.obsidian/` files).
+- Keep edits minimal and scoped to the request.
+- Do not edit `dist/` by hand; treat it as generated output.
+- Do not modify `themes/hugo-bearcub/` unless explicitly requested.
+- Preserve markdown content and front matter values unless a request requires changes.
+- Keep legacy URL support intact by regenerating `_redirects` when routes/content change.
 
 ## Local commands
-- Preview locally (include drafts): `hugo server -D`
-- Production build: `hugo --gc --minify`
-- Clean rebuild (if output seems stale): `rm -rf public && hugo --gc --minify`
+- Install deps: `pnpm install`
+- Start dev server: `pnpm dev`
+- Normalize content only: `pnpm run normalize:content`
+- Regenerate redirects only: `pnpm run generate:redirects`
+- Production build: `pnpm build`
+- Preview build: `pnpm preview`
+- Type checks: `pnpm check`
+- Deploy: `pnpm deploy`
 
 ## Deployment notes
-- `wrangler` is not guaranteed to be installed globally.
-- Prefer one-off deploy via: `npx wrangler deploy`
-- Ensure `public/` is freshly generated before deploying.
+- Cloudflare assets directory is `dist/`.
+- `pnpm deploy` runs build and then `wrangler deploy`.
+- Keep `public/images/favicon.png` and `public/images/share.webp` present for metadata and favicon.
 
 ## Validation checklist before handoff
-- Run `hugo --gc --minify` after content/layout/config changes.
-- Confirm no Hugo build errors.
-- If layout/styling changed, spot-check key pages from local server output.
+- Run `pnpm build` and ensure no errors.
+- Run `pnpm check` for Astro/type validation.
+- Confirm key routes: `/`, `/blog/`, `/tags/`, `/index.xml`, `/blog/index.xml`, `/tags/index.xml`, `/sitemap.xml`, `/robots.txt`.
+- Spot-check one post page and one tag page for date/tag/byline/reply-link behavior.

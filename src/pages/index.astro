@@ -1,0 +1,10 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getHomePage } from '../lib/content';
+
+const homePage = await getHomePage();
+---
+
+<BaseLayout canonicalPath="/" description={homePage.description || undefined}>
+  <content set:html={homePage.html} />
+</BaseLayout>

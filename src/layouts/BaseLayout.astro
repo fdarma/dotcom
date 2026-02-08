@@ -1,0 +1,60 @@
+---
+import '../../themes/hugo-bearcub/assets/original.css';
+import '../../themes/hugo-bearcub/assets/syntax.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import SeoTags from '../components/SeoTags.astro';
+import { absoluteUrl, siteConfig } from '../config/site';
+import { getMainNavItems } from '../lib/content';
+
+interface Props {
+  title?: string;
+  description?: string;
+  keywords?: string[];
+  author?: string;
+  image?: string;
+  canonicalPath?: string;
+  type?: 'website' | 'article';
+  publishedTime?: Date;
+  modifiedTime?: Date;
+}
+
+const props = Astro.props;
+const navItems = await getMainNavItems();
+const fullTitle = props.title ? `${props.title} | ${siteConfig.title}` : siteConfig.title;
+---
+
+<!doctype html>
+<html lang={siteConfig.languageCode}>
+  <head>
+    <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+    <link rel="shortcut icon" href={absoluteUrl(siteConfig.favicon)} />
+    <title>{fullTitle}</title>
+    <SeoTags
+      title={fullTitle}
+      description={props.description}
+      keywords={props.keywords}
+      author={props.author}
+      canonicalPath={props.canonicalPath}
+      image={props.image}
+      type={props.type}
+      publishedTime={props.publishedTime}
+      modifiedTime={props.modifiedTime}
+    />
+    <slot name="head" />
+  </head>
+  <body>
+    <header>
+      <Header navItems={navItems} />
+    </header>
+    <main id="main-content">
+      <slot />
+    </main>
+    <footer>
+      <Footer />
+    </footer>
+  </body>
+</html>

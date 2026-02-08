@@ -1,0 +1,9 @@
+---
+import MarkdownIt from 'markdown-it';
+import { siteConfig } from '../config/site';
+
+const markdown = new MarkdownIt({ html: false, linkify: true, typographer: false });
+const madeWithHtml = markdown.renderInline(siteConfig.madeWith);
+---
+
+<small>{siteConfig.copyright} | <span set:html={madeWithHtml} /></small>

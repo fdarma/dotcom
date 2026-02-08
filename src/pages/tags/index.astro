@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getTagNames, getPostsByTag } from '../../lib/content';
+
+const tags = await getTagNames();
+const tagCounts = await Promise.all(
+  tags.map(async (tag) => ({
+    tag,
+    count: (await getPostsByTag(tag)).length
+  }))
+);
+---
+
+<BaseLayout title="tags" canonicalPath="/tags/">
+  <content>
+    <ul class="blog-posts">
+      {tagCounts.map(({ tag, count }) => (
+        <li>
+          <a href={`/tags/${tag}/`}>#{tag}</a> ({count})
+        </li>
+      ))}
+    </ul>
+  </content>
+</BaseLayout>

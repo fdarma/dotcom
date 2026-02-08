@@ -1,0 +1,17 @@
+---
+import type { NavItem } from '../lib/content';
+import { siteConfig } from '../config/site';
+import Nav from './Nav.astro';
+
+interface Props {
+  navItems: NavItem[];
+}
+
+const { navItems } = Astro.props;
+---
+
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<a href="/" class="title"><h1>{siteConfig.title}</h1></a>
+<nav>
+  <Nav items={navItems} />
+</nav>

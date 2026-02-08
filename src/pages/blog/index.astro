@@ -1,0 +1,39 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { formatDate } from '../../config/site';
+import { getPosts, getTagNames } from '../../lib/content';
+
+const [posts, tags] = await Promise.all([getPosts(), getTagNames()]);
+---
+
+<BaseLayout title="archive" canonicalPath="/blog/">
+  <content>
+    <ul class="blog-posts">
+      {
+        posts.length > 0 ? (
+          posts.map((post) => (
+            <li>
+              <span>
+                <i>
+                  <time datetime={formatDate(post.date)}>{formatDate(post.date)}</time>
+                </i>
+              </span>
+              {post.link ? (
+                <a href={post.link} target="_blank" rel="noreferrer">{post.title} ↪</a>
+              ) : (
+                <a href={post.url}>{post.title}</a>
+              )}
+            </li>
+          ))
+        ) : (
+          <li>No posts yet</li>
+        )
+      }
+    </ul>
+    <div>
+      {tags.map((tag) => (
+        <a class="blog-tags" href={`/tags/${tag}/`}>#{tag}</a>
+      ))}
+    </div>
+  </content>
+</BaseLayout>

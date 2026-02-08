@@ -135,8 +135,6 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-/public
-
 /themes
 
 /resources
@@ -146,3 +144,5 @@ dist
 /content/blog/.obsidian
 
 .DS_Store
+
+/.astro
