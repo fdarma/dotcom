@@ -12,3 +12,4 @@ tags = []
 2. Must be able to sleep inside
 3. Should be able to overtake
 4. Should be unassuming
+5. Should be uncommon
