@@ -13,7 +13,6 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 const description = post.description || post.summary;
-const ogImage = post.images[0] ?? siteConfig.defaultSocialImage;
 const replyEmail = siteConfig.author.email;
 const replySubject = encodeURIComponent(`Reply to \"${post.title}\"`);
 ---
@@ -24,10 +23,6 @@ const replySubject = encodeURIComponent(`Reply to \"${post.title}\"`);
   keywords={post.tags}
   author={post.author}
   canonicalPath={post.url}
-  image={ogImage}
-  type="article"
-  publishedTime={post.date}
-  modifiedTime={post.date}
 >
   <h1>{post.title}</h1>
   <p class="byline">

@@ -4,15 +4,31 @@ import { formatDate } from '../../config/site';
 import { getPosts, getTagNames } from '../../lib/content';
 
 const [posts, tags] = await Promise.all([getPosts(), getTagNames()]);
+
+function searchText(post: (typeof posts)[number]): string {
+  const body = post.html.replace(/<[^>]+>/g, ' ');
+  return [post.title, post.summary, post.tags.join(' '), formatDate(post.date), body]
+    .join(' ')
+    .replace(/\s+/g, ' ')
+    .toLowerCase();
+}
 ---
 
 <BaseLayout title="archive" canonicalPath="/blog/">
   <content>
-    <ul class="blog-posts">
+    <div class="archive-search">
+      <input
+        id="search"
+        type="search"
+        autocomplete="off"
+        aria-label="Search the archive"
+      />
+    </div>
+    <ul class="blog-posts" id="posts">
       {
         posts.length > 0 ? (
           posts.map((post) => (
-            <li>
+            <li data-search={searchText(post)}>
               <span>
                 <i>
                   <time datetime={formatDate(post.date)}>{formatDate(post.date)}</time>
@@ -30,10 +46,94 @@ const [posts, tags] = await Promise.all([getPosts(), getTagNames()]);
         )
       }
     </ul>
-    <div>
+    <p id="no-results" hidden>No matches.</p>
+    <div id="tags">
       {tags.map((tag) => (
         <a class="blog-tags" href={`/tags/${tag}/`}>#{tag}</a>
       ))}
     </div>
   </content>
+
+  <script>
+    const input = document.getElementById('search') as HTMLInputElement | null;
+    const items = Array.from(
+      document.querySelectorAll<HTMLLIElement>('#posts li[data-search]')
+    );
+    const noResults = document.getElementById('no-results');
+    const tagsEl = document.getElementById('tags');
+
+    function filter() {
+      if (!input) return;
+      const tokens = input.value.trim().toLowerCase().split(/\s+/).filter(Boolean);
+      let visible = 0;
+
+      for (const li of items) {
+        const haystack = li.dataset.search ?? '';
+        const match = tokens.every((token) => haystack.includes(token));
+        li.hidden = !match;
+        if (match) visible += 1;
+      }
+
+      if (noResults) noResults.hidden = tokens.length === 0 || visible !== 0;
+      if (tagsEl) tagsEl.hidden = tokens.length > 0;
+    }
+
+    input?.addEventListener('input', filter);
+    filter();
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === '/' && document.activeElement !== input) {
+        event.preventDefault();
+        input?.focus();
+      }
+    });
+  </script>
+
+  <style>
+    .archive-search {
+      margin: 0.75rem 0 1rem;
+    }
+
+    #search {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 8px 10px;
+      border: 1px solid #444;
+      border-radius: 4px;
+    }
+
+    #search::-webkit-search-cancel-button {
+      width: 0.7rem;
+      height: 0.7rem;
+      margin-left: 0.75rem;
+      cursor: pointer;
+      opacity: 0.55;
+      appearance: none;
+      -webkit-appearance: none;
+      background:
+        linear-gradient(45deg, transparent 43%, currentColor 43% 57%, transparent 57%),
+        linear-gradient(-45deg, transparent 43%, currentColor 43% 57%, transparent 57%);
+    }
+
+    #search::-webkit-search-cancel-button:hover {
+      opacity: 0.85;
+    }
+
+    #posts {
+      margin-top: 0;
+    }
+
+    #posts li {
+      align-items: baseline;
+      margin-bottom: 0.35rem;
+    }
+
+    #posts li[hidden] {
+      display: none;
+    }
+
+    #no-results {
+      margin-top: 0;
+    }
+  </style>
 </BaseLayout>

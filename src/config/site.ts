@@ -7,7 +7,7 @@ export const siteConfig = {
   languageCode: 'en-US',
   favicon: '/images/favicon.png',
   defaultSocialImage: '/images/share.webp',
-  madeWith: '[ʕᵔᴥᵔʔ](https://github.com/clente/hugo-bearcub)',
+  madeWith: '(¦ꒉ[▓▓]',
   social: {
     twitter: 'example',
     facebookAdmin: '0000000000'

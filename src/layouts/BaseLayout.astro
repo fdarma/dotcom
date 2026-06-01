@@ -12,11 +12,7 @@ interface Props {
   description?: string;
   keywords?: string[];
   author?: string;
-  image?: string;
   canonicalPath?: string;
-  type?: 'website' | 'article';
-  publishedTime?: Date;
-  modifiedTime?: Date;
 }
 
 const props = Astro.props;
@@ -39,10 +35,6 @@ const fullTitle = props.title ? `${props.title} | ${siteConfig.title}` : siteCon
       keywords={props.keywords}
       author={props.author}
       canonicalPath={props.canonicalPath}
-      image={props.image}
-      type={props.type}
-      publishedTime={props.publishedTime}
-      modifiedTime={props.modifiedTime}
     />
     <slot name="head" />
   </head>
