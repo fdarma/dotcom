@@ -6,15 +6,33 @@ tags = ["devlog"]
 +++
 
 tools
-- ghostty
-- zed
+- ghostty (kitty default)
+- zed (ayu darker)
 - helium
 - obsidian
 - hammerspoon[1]
 - sublime merge
+- codex
+- aldente
+- cap
+- betterdisplay
+- stats
+- yaak
+- foobar
+- soulseek
+- ocenaudio
+- cli [2]
+	- btop
+	- atuin
+	- zoxide
+	- zsh-autosuggestions
+	- zsh-syntax-highlighting
+	- fzf
+	- eza
 
 
 appendix
+
 [1] hammerspoon config
 ```
 -- ~/.hammerspoon/init.lua
@@ -302,4 +320,69 @@ hs.hotkey.bind({ "ctrl", "alt" }, "down", moveVertical)
   
 
 hs.alert.show("🔲 6-Zone Vertical Layout Loaded")
+```
+
+[2] zsh config
+```
+# ─── oh-my-zsh ───────────────────────────────────────────────
+export ZSH="$HOME/.oh-my-zsh"
+ZSH_THEME="robbyrussell"
+plugins=(git)
+source $ZSH/oh-my-zsh.sh
+
+# ─── zsh-syntax-highlighting & autosuggestions ───────────────
+source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+# Shift+Tab accepts the whole autosuggestion
+bindkey '^[[Z' autosuggest-accept
+
+# ─── fzf ─────────────────────────────────────────────────────
+eval "$(fzf --zsh)"
+export FZF_CTRL_T_OPTS='--walker-skip .git,node_modules,target --preview "bat -n --color=always {}" --bind "ctrl-/:change-preview-window(down|hidden|)"'
+
+# ─── atuin (shell history) ───────────────────────────────────
+. "$HOME/.atuin/bin/env"
+eval "$(atuin init zsh)"
+
+# ─── zoxide (smarter cd) ─────────────────────────────────────
+eval "$(zoxide init zsh)"
+alias cd='z'
+alias cdi='zi'
+
+# ─── eza (ls with icons) ─────────────────────────────────────
+alias ls='eza $eza_params --icons'
+
+# ─── Git aliases ─────────────────────────────────────────────
+alias gs='git status'
+alias ga='git add .'
+alias gp='git push'
+alias gl='git pull'
+alias gnb='git checkout -b'
+alias gsw='git checkout -'
+alias gst='git stash'
+alias gstp='git stash pop'
+alias gmain='git checkout main && git pull'
+alias gc='git commit -m'
+alias gco='git checkout'
+
+# Clone using personal GitHub account SSH key
+gclone-personal() {
+  git clone "$(echo "$1" | sed 's/github\.com/github.com-personal/')" "${@:2}"
+}
+
+# Git aliases cheatsheet
+unalias gg 2>/dev/null
+gg() {
+  echo "gs    → git status"
+  echo "ga    → git add ."
+  echo "gp    → git push"
+  echo "gl    → git pull"
+  echo "gc    → git commit -m"
+  echo "gco   → git checkout"
+  echo "gnb   → git checkout -b <branch>"
+  echo "gsw   → git checkout - (switch back)"
+  echo "gst   → git stash"
+  echo "gstp  → git stash pop"
+  echo "gmain → git checkout main && git pull"
+}
 ```
